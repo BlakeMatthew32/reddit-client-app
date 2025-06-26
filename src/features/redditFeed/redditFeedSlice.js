@@ -4,7 +4,9 @@ import { createSlice } from "@reduxjs/toolkit";
 export const redditFeedSlice = createSlice({
   name: 'redditFeed',
   initialState: {
-
+    posts: [],
+    isLoading: false,
+    hasError: false
   },
   reducers: {
 
