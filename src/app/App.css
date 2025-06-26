@@ -1,1 +1,24 @@
+header {
+  padding-inline: 1vw;
+  height: 95px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  align-items: center;
+  font-size: 2rem;
+  background-color: white;
+  color: black;
+}
+
+header input {
+  display: block;
+  place-self: center;
+  width: 24vw;
+  min-width: 250px;
+  font-size: 0.825em;
+  padding-block: .25em;
+  padding-inline: .75em;
+  border: none;
+  border-radius: 15px;
+}
 

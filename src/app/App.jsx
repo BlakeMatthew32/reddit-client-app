@@ -1,10 +1,11 @@
+import Header from '../components/Header'
 import './App.css'
 
 function App() {
 
   return (
     <>
-      <h1>Reddit client app</h1>
+      <Header />
     </>
   )
 }
