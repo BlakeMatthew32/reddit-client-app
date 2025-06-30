@@ -5,6 +5,7 @@ export const fetchRedditFeed = createAsyncThunk(
   async (topic, thunkAPI) => {
     const response = await fetch("https://www.reddit.com/r/gaming.json")
     const json = await response.json()
+    console.log(json.data.children)
     return json.data.children
   }
 )

@@ -22,3 +22,42 @@ header input {
   border-radius: 15px;
 }
 
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.posts-container {
+  width: 90%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 50px;
+  margin-inline: auto;
+  margin-block: 50px;
+}
+
+.post-tile {
+  border: 1px solid white;
+  border-radius: 15px;
+  padding: 0.75em;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.post-tile-image {
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.post-tile div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 1.75rem;
+}
+
+.post-tile img {
+  width: 50%;
+  border-radius: 15px;
+}
