@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { clearSearchTerm, selectSearchTerm, setSearchTerm } from "./searchSlice"
+import { setActiveTopic } from "../redditFeed/redditFeedSlice"
 
 const Search = () => {
   
@@ -12,7 +13,8 @@ const Search = () => {
 
   const onSubmitHandler = (event) => {
     event.preventDefault()
-    console.log(searchTerm) // Do something with the search term on submit here
+    const searchTermJoined = searchTerm.split(' ').join('')
+    dispatch(setActiveTopic(searchTermJoined))
     dispatch(clearSearchTerm())
   }
 

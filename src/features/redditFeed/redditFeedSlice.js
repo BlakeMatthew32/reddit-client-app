@@ -3,9 +3,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const fetchRedditFeed = createAsyncThunk(
   'redditFeed/fetchRedditFeed',
   async (topic, thunkAPI) => {
-    const response = await fetch("https://www.reddit.com/r/gaming.json")
+    const response = await fetch(`https://www.reddit.com/r/${topic}.json`)
     const json = await response.json()
-    console.log(json.data.children)
     return json.data.children
   }
 )
@@ -14,13 +13,15 @@ export const fetchRedditFeed = createAsyncThunk(
 export const redditFeedSlice = createSlice({
   name: 'redditFeed',
   initialState: {
-    activeFeed: '',
+    activeTopic: '',
     posts: [],
     isLoading: false,
     hasError: false
   },
   reducers: {
-
+    setActiveTopic(state, action) {
+      state.activeTopic = action.payload
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchRedditFeed.pending, (state, actions) => {
@@ -39,8 +40,9 @@ export const redditFeedSlice = createSlice({
   }
 })
 
-export const { } = redditFeedSlice.actions
+export const { setActiveTopic } = redditFeedSlice.actions
 
 export const selectRedditFeedPosts = state => state.redditFeed.posts
+export const selectTopic = state => state.redditFeed.activeTopic
 
 export default redditFeedSlice.reducer

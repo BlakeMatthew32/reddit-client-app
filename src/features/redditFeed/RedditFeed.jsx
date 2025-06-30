@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
-import { fetchRedditFeed, selectRedditFeedPosts } from "./redditFeedSlice"
+import { fetchRedditFeed, selectRedditFeedPosts, selectTopic } from "./redditFeedSlice"
 import { useEffect } from "react"
+import { selectSearchTerm } from "../search/searchSlice"
 
 const imageCheckRegex = /\.(png|jpg|jpeg)$/
 const baseRedditUrl = 'https://www.reddit.com/'
@@ -8,13 +9,18 @@ const baseRedditUrl = 'https://www.reddit.com/'
 const RedditFeed = () => {
 
   const dispatch = useDispatch()
-  const ActiveFeedPosts = useSelector(selectRedditFeedPosts)
+  const activeFeedPosts = useSelector(selectRedditFeedPosts)
+  const activeTopic = useSelector(selectTopic)
 
   useEffect(() => {
-    dispatch(fetchRedditFeed())
-  }, [])
+    let topic = 'gaming'
+    if (activeTopic) {
+      topic = activeTopic
+    }
+    dispatch(fetchRedditFeed(topic))
+  }, [activeTopic])
 
-  const postElements = ActiveFeedPosts?.map(post => {
+  const postElements = activeFeedPosts?.map(post => {
 
     const hasImage = imageCheckRegex.test(post.data.url)
 
@@ -22,8 +28,8 @@ const RedditFeed = () => {
     const subRedditLink =  baseRedditUrl + post.data.permalink
 
     return (
-      <a href={subRedditLink} target="_blank">
-        <div key={post.data.name} className={classes}>
+      <a  key={post.data.name} href={subRedditLink} target="_blank">
+        <div className={classes}>
           <div>
             <h3>{post.data.title}</h3>
             <p>{post.data.selftext}</p>
