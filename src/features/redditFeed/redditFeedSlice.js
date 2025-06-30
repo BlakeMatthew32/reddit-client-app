@@ -1,20 +1,45 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+export const fetchRedditFeed = createAsyncThunk(
+  'redditFeed/fetchRedditFeed',
+  async (topic, thunkAPI) => {
+    const response = await fetch("https://www.reddit.com/r/gaming.json")
+    const json = await response.json()
+    return json.data.children
+  }
+)
 
 
 export const redditFeedSlice = createSlice({
   name: 'redditFeed',
   initialState: {
+    activeFeed: '',
     posts: [],
     isLoading: false,
     hasError: false
   },
   reducers: {
 
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchRedditFeed.pending, (state, actions) => {
+      state.isLoading = true
+      state.hasError = false
+    })
+    .addCase(fetchRedditFeed.fulfilled, (state, actions) => {
+      state.isLoading = false
+      state.hasError = false
+      state.posts = actions.payload
+    })
+    .addCase(fetchRedditFeed.rejected, (state, actions) => {
+      state.isLoading = false
+      state.hasError = true
+    })
   }
 })
 
 export const { } = redditFeedSlice.actions
 
-export const selectRedditFeed = state => state.redditFeed
+export const selectRedditFeedPosts = state => state.redditFeed.posts
 
 export default redditFeedSlice.reducer
